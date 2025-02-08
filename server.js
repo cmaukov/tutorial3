@@ -3,7 +3,7 @@ const path = require('path');
 const {logger} = require('./middleware/logEvents');
 const cors = require('cors');
 const errorHandler = require('./middleware/errorHandler')
-
+//just a test
 const PORT = process.env.PORT || 3500; // port for the web server
 const app = express(); 
 
