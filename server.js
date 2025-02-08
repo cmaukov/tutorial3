@@ -88,6 +88,3 @@ app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 });
 
-function add(a,b){
-    return a+b;
-}
