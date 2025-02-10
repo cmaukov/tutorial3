@@ -14,7 +14,6 @@ const newEmployee = {
     firstname: req.body.firstname,
     lastname: req.body.lastname
 }
-console.log(`New employee id: ${newEmployee.id}`);
 if(!newEmployee.firstname|| !newEmployee.lastname){
     return res.status(400).json({'message':'First and last name are required'});
 }
