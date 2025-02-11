@@ -1,4 +1,4 @@
-const allowedOrigins = ['https://www.google.com', 'http://another-site.com'];
+const allowedOrigins = require('./allowedOrgins');
 const corsOptions = {
     origin: (origin, callback) =>
         (!origin || allowedOrigins.includes(origin))
