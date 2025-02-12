@@ -23,12 +23,18 @@ const handleRefreshToken = (req, res) => {
         process.env.REFRESH_TOKEN_SECRET,
         (err, decoded) => {
             if (err || loginUser.username !== decoded.username) return res.sendStatus(403); // Forbidden
+            const roles = Object.values(loginUser.roles);
             const accessToken = jwt.sign(
-                {'username':decoded.username},
+                {
+                    "UserInfo": {
+                        'username': decoded.username,
+                        "roles": roles
+                    }
+                },
                 process.env.ACCESS_TOKEN_SECRET,
-                {expiresIn:'120s'}
+                { expiresIn: '120s' }
             )
-            res.json({accessToken});
+            res.json({ accessToken });
         }
     );
 

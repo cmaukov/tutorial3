@@ -21,9 +21,15 @@ const handleLogin = async (req, res) => {
     const match = await bcrypt.compare(pwd, loginUser.password);
 
     if (match) {
+        const roles = Object.values(loginUser.roles);
         // create JWTs
         const accessToken = jwt.sign(
-            { "username": loginUser.username },
+            {
+                "UserInfo": {
+                    "username": loginUser.username,
+                    "roles": roles
+                }
+            },
             process.env.ACCESS_TOKEN_SECRET,
             { expiresIn: '120s' } // in production set the expiration <15 minutes
 
@@ -37,15 +43,15 @@ const handleLogin = async (req, res) => {
         // Saving refreshToken with current user
         // we are saving our refresh token in the database. in our example we are using a json file but in production this will be a database
         const otherUsers = userDB.users.filter(person => person.username !== loginUser.username);
-        const currentUser = {...loginUser, refreshToken };
+        const currentUser = { ...loginUser, refreshToken };
         userDB.setUsers([...otherUsers, currentUser]);
         await fsPromises.writeFile(
             path.join(__dirname, '..', 'model', 'users.json'),
             JSON.stringify(userDB.users));
-        
-            res.cookie('jwt',refreshToken,{httpOnly: true, sameSite:'None',maxAge:24*60*60*1000}); // it is very important we send the option httpOnly: true. httpOnly cookie is not available to javascript.
-            //  maxAge is in milliseconds - in our example we are setting it to 24h
-            res.json({accessToken});
+
+        res.cookie('jwt', refreshToken, { httpOnly: true, sameSite: 'None', maxAge: 24 * 60 * 60 * 1000 }); // it is very important we send the option httpOnly: true. httpOnly cookie is not available to javascript.
+        //  maxAge is in milliseconds - in our example we are setting it to 24h
+        res.json({ accessToken });
     } else {
         res.sendStatus(401);
     }
