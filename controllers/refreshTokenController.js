@@ -3,8 +3,6 @@ const userDB = {
     setUsers: function (data) { this.users = data }
 }
 const jwt = require('jsonwebtoken');
-require('dotenv').config(); //This loads environment variables from a .env file into process.env
-
 
 const handleRefreshToken = (req, res) => {
     const cookies = req.cookies;

@@ -7,8 +7,6 @@ const fsPromises = require('fs').promises;
 const path = require('path');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-require('dotenv').config(); //This loads environment variables from a .env file into process.env
-
 
 const handleLogin = async (req, res) => {
     const { user, pwd } = req.body;

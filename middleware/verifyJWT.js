@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-require('dotenv').config(); // This loads environment variables from a .env file into process.env
 
 const verifyJWT = (req,res,next)=>{
 const authHeader = req.headers.authorization || req.headers.Authorization;
