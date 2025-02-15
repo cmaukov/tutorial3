@@ -1,7 +1,7 @@
 const Employee = require('../model/Employee');
 
 const getAllEmployees = async (req, res) => {
-    const employees = await Empoloyee.find();
+    const employees = await Employee.find();
     if (!employees) return res.status(204).json({ 'messge': 'No emloloyees found' });
     res.json(employees);
 };
@@ -11,16 +11,14 @@ const createNewEmployee = async (req, res) => {
         return res.status(400).json({ 'message': 'First and last name are required' });
     }
     try {
-        const result = await Emoloyee.create({
+        const result = await Employee.create({
             firstname: req.body.firstname,
             lastname: req.body.lastname 
         });
         res.status(201).json(result);
     } catch (err) {
-        console.error(eff);
+        console.error(err);
     }
-
-    res.status(201).json(data.employees);
 };
 
 const updateEmployee = async (req, res) => {
